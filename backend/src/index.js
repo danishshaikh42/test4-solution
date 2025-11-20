@@ -22,4 +22,8 @@ app.use('/api/stats', statsRouter);
 // Not Found
 app.use('*', notFound);
 
-app.listen(port, () => console.log('Backend running on http://localhost:' + port));
+if (require.main === module) {
+	app.listen(port, () => console.log('Backend running on http://localhost:' + port));
+}
+
+module.exports = app;
