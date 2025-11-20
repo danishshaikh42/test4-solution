@@ -23,8 +23,9 @@ describe('Items API', () => {
       .get('/api/items')
       .expect('Content-Type', /json/)
       .expect(200);
-
-    const items = res.body;
+    // server may return a paginated shape { items, page, limit, total, totalPages }
+    const body = res.body;
+    const items = Array.isArray(body) ? body : (body && Array.isArray(body.items) ? body.items : []);
     expect(Array.isArray(items)).toBe(true);
     const orig = JSON.parse(originalData);
     expect(items.length).toBe(orig.length);

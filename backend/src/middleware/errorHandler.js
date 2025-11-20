@@ -4,4 +4,12 @@ const notFound = (req, res, next) => {
   next(err);
 }
 
-module.exports = { notFound };
+// Generic error handler for Express
+const errorHandler = (err, req, res, next) => {
+  const status = err.status || 500;
+  const payload = { error: err.message || 'Internal Server Error' };
+  // In production you might hide stack traces; here we return minimal info
+  res.status(status).json(payload);
+};
+
+module.exports = { notFound, errorHandler };
